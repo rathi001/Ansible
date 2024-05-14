@@ -1,0 +1,6 @@
+---
+- name: CopySH
+  copy: src=updateKey.sh dest=/home/ubuntu/updateKey.sh
+
+- name: prequesites for jenkins
+  shell: /home/ubuntu/updateKey.sh >> update.txt

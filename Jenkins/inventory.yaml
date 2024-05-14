@@ -1,0 +1,5 @@
+---
+tgt:
+  hosts:
+    my_host_01:
+      ansible_host: 172.31.29.132

@@ -1,0 +1,4 @@
+---
+- name: echo
+  shell:
+    cmd: "Updated apt >> /home/ubuntu/apt_updated.txt"

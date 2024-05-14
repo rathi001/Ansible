@@ -1,0 +1,35 @@
+---
+- name: CopySH
+  copy: src=updateKey.sh dest=/home/ubuntu/updateKey.sh
+
+# - name: prerequisite
+#   notify: prequesites for jenkins
+
+#- name: key
+#  shell:
+#    cmd: "chmod +x /home/ubuntu/updateKey.sh && /home/ubuntu/updateKey.sh"
+
+- name: Download Jenkins keyring
+  #become: yes
+  shell: 'wget -O /usr/share/keyrings/jenkins-keyring.asc  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key'
+  register: keyring_download_output
+
+- name: Debug keyring download output
+  debug:
+    var: keyring_download_output
+
+- name: Add Jenkins package repository
+  #become: yes
+  shell: echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+  register: package_output
+
+- name: Debug jenkins package repository
+  debug:
+    var: package_output
+
+- name: update
+  apt:
+    update_cache: yes
+
+- name: Install
+  shell: apt-get install jenkins
